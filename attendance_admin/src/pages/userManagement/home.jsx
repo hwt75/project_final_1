@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData } from '../../redux/dataSlice';
+import { getData, loadStatus } from '../../redux/dataSlice';
 
 const EditableCell = ({
   editing,
@@ -13,6 +13,7 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
+
   const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
   return (
     <td {...restProps}>
@@ -40,7 +41,7 @@ const EditableCell = ({
 const Home = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const dataState = useSelector(state => state.dataSlice)
   console.log(dataState);
   const [editingKey, setEditingKey] = useState('');
@@ -163,17 +164,22 @@ const Home = () => {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === 'age' || 'studentId' ? 'number' : 'text',
+        inputType: col.dataIndex === 'birth' || 'studentId' ? 'number' : 'text',
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
       }),
     };
   });
-  // useEffect(()=>{
-  //   dispatch(getData())
-  // },[dataState.loadDataStatus])
-
+  useEffect(()=>{
+    dispatch(getData())
+                   
+  },[])
+  useEffect(()=>{
+    if(dataState.loadDataStatus === loadStatus.Success){
+      setData(dataState.data);
+    }
+  },[dataState.loadDataStatus])
 
   return (
     <Form form={form} component={false}>

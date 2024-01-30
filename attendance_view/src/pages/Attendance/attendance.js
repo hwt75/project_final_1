@@ -34,7 +34,7 @@ const Attendance = () => {
     const sendDataToAPI = async (data) => {
          await axios.post(process.env.REACT_APP_HOST, data)
           .then((data)=> {
-            setStudentNumber()
+            setStudentNumber("")
          modalRef.current.open(true);
          setIsValud(false);
 
@@ -51,17 +51,17 @@ const Attendance = () => {
       return /^\d+$/.test(str);
     };
    const butonClick = useCallback(()=>{
-      if(studentNumber == null || !isNumber(studentNumber) || studentNumber.length < 8 || studentNumber.length > 12) {
+      if(studentNumber == null || !isNumber(studentNumber) || studentNumber.length < 7 || studentNumber.length > 12) {
          setIsValud(true);
          setIdInValid(false);
-
+         console.log("error 1");
       }
       else 
       {
          setIsValud(false);
          sendDataToAPI({
             user_number:studentNumber,
-            ip:ip1
+            ip:"123123123"
          })
       }
    },[studentNumber]);
@@ -82,7 +82,7 @@ const Attendance = () => {
          </div>
          <div id="clockdate">
          <div className="tab">                    
-                      <input placeholder="Enter Student Numbers..."  onChange={(e)=>{setStudentNumber(e.target.value)}}/>
+                      <input placeholder="Enter Student Numbers..." value={studentNumber}  onChange={(e)=>{setStudentNumber(e.target.value)}}/>
                 </div>
                 {isValid ? <p className="warning">Please input your number again</p> : ""}
                 {idInValid ? <p className="warning">Your Student Id does not exist</p> : ""}

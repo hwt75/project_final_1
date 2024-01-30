@@ -17,7 +17,7 @@ const Home = () =>{
                     Tính năng đang được phát triển
                   </h3>
                   <p>Chúng tôi sẽ cố gắng hoàn thiện sớm</p>
-                  <p onClick={()=>navigate('/')} class="link_404">Chuyển đến trang chủ</p>
+                  <p onClick={()=>navigate('/')} className="link_404">Chuyển đến trang chủ</p>
                 </div>
               </div>
             </div>

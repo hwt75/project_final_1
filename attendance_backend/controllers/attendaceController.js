@@ -20,7 +20,9 @@ class AttendanceController {
       });
   }
 
+
   async attendance(req, res, next) {
+    console.log("tesst");
     const { user_number, ip } = req.body;
     if (user_number) {
       await UserModel.checkStudentExists(user_number)
@@ -37,6 +39,7 @@ class AttendanceController {
                     is_arrival: false,
                     message: "update successfully",
                   });
+                  console.log("scuucce");
                 } else {
                   const attendance = new Attendance({
                     user_number: user_number,
