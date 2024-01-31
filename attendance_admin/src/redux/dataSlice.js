@@ -46,7 +46,7 @@ export const loadStatus = {
   })
   export const updateUser = createAsyncThunk('/update-user', async (params, { rejectWithValue }) => {
     try{
-      const response = await axiosRequest('/update', params);
+      const response = await axiosRequest('/user/update', params);
       return response.data;
     }
     catch (error) {
@@ -85,11 +85,9 @@ export const dataSlice = createSlice({
     extraReducers:(builder) => {
       builder
       .addCase(getData.pending, (state,action)=>{
-        console.log("failed");
         state.loadDataStatus = loadStatus.Loading;
       })
       .addCase(getData.fulfilled, (state,action)=>{
-        console.log(action.payload);
         state.data = action.payload;
         state.loadDataStatus = loadStatus.Success;
       })

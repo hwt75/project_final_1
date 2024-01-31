@@ -30,7 +30,7 @@ class UserModel extends CommonModel {
   }
   async updateUserById(user) {
     return await this.executeQuery(
-      `UPDATE student SET name = '${user.name}', email = '${user.email}', birth = '${user.birth}', phoneNumber = '${user.phoneNumber}', address = '${user.address}', hometown = '${user.hometown}'  WHERE id = '${user.id}'`
+      `UPDATE student SET name = '${user.name}', email = '${user.email}', birth = '${user.birth ?? 0}', phoneNumber = '${user.phoneNumber ?? ""}', address = '${user.address ?? ""}', hometown = '${user.hometown ?? ""}'  WHERE id = '${user.id}'`
     );
   }
 }

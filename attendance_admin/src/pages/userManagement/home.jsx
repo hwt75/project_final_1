@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData, loadStatus } from '../../redux/dataSlice';
+import { getData, loadStatus, updateUser } from '../../redux/dataSlice';
 
 const EditableCell = ({
   editing,
@@ -43,7 +43,6 @@ const Home = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState();
   const dataState = useSelector(state => state.dataSlice)
-  console.log(dataState);
   const [editingKey, setEditingKey] = useState('');
   const isEditing = (record) => record.key === editingKey;
   const edit = (record) => {
@@ -60,23 +59,18 @@ const Home = () => {
   };
   const save = async (key) => {
     try {
-      const row = await form.validateFields();
-      console.log(row);
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-        setData(newData);
-        setEditingKey('');
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey('');
-      }
+      const row = await form.getFieldValue();
+
+      var newuser = {};
+      newuser.name = row.name;
+      newuser.address = row.address;
+      newuser.email = row.email;
+      newuser.phoneNumber = row.phoneNumber;
+      newuser.studentId = row.studentId;
+      newuser.hometown = row.hometown;
+      newuser.id = row.id;
+      newuser.email = row.email;
+      dispatch(updateUser(newuser));
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }
@@ -176,10 +170,11 @@ const Home = () => {
                    
   },[])
   useEffect(()=>{
-    if(dataState.loadDataStatus === loadStatus.Success){
+    if(dataState.loadDataStatus === loadStatus.Success || dataState.loadAddUserStatus === loadStatus.Success){
       setData(dataState.data);
     }
-  },[dataState.loadDataStatus])
+
+  },[dataState.loadDataStatus,dataState.loadAddUserStatus])
 
   return (
     <Form form={form} component={false}>

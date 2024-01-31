@@ -3,59 +3,59 @@ const { upperCase, lowerCase } = require("../utils/processString");
 const { v4: uuidv4 } = require("uuid");
 class UserController {
   async getAll(req, res, next) {
-    const user = [
-      {
-        address: "nam dinh",
-        birth: 1706167164453,
-        email: "dung@gmail.com",
-        hometown: "",
-        id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
-        name: "dung",
-        phoneNumber: "",
-        studentId: "20391902",
-      },
-      {
-        address: "nam dinh",
-        birth: 1706167164453,
-        email: "dung@gmail.com",
-        hometown: "",
-        id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
-        name: "dung",
-        phoneNumber: "",
-        studentId: "20391902",
-      },
-      {
-        address: "nam dinh",
-        birth: 1706167164453,
-        email: "dung@gmail.com",
-        hometown: "",
-        id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
-        name: "dung",
-        phoneNumber: "",
-        studentId: "20391902",
-      },
-      {
-        address: "nam dinh",
-        birth: 1706167164453,
-        email: "dung@gmail.com",
-        hometown: "",
-        id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
-        name: "dung",
-        phoneNumber: "",
-        studentId: "20391902",
-      },
-    ];
+    // const user = [
+    //   {
+    //     address: "nam dinh",
+    //     birth: 1706167164453,
+    //     email: "dung@gmail.com",
+    //     hometown: "",
+    //     id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
+    //     name: "dung",
+    //     phoneNumber: "",
+    //     studentId: "20391902",
+    //   },
+    //   {
+    //     address: "nam dinh 1",
+    //     birth: 1706167164453,
+    //     email: "dung@gmail.com",
+    //     hometown: "",
+    //     id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
+    //     name: "dung",
+    //     phoneNumber: "",
+    //     studentId: "20391902",
+    //   },
+    //   {
+    //     address: "nam dinh222",
+    //     birth: 1706167164453,
+    //     email: "dung@gmail.com",
+    //     hometown: "",
+    //     id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
+    //     name: "dung",
+    //     phoneNumber: "",
+    //     studentId: "20391902",
+    //   },
+    //   {
+    //     address: "nam dinh 2",
+    //     birth: 1706167164453,
+    //     email: "dung@gmail.com",
+    //     hometown: "",
+    //     id: "f811722f-9159-4f8b-a6fc-bc5ffbb7b6ab",
+    //     name: "dung",
+    //     phoneNumber: "",
+    //     studentId: "20391902",
+    //   },
+    // ];
 
     console.log("get all");
-    // await UserModel.getAllData()
-    //   .then((data) => {
-    //     res.json(data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     return res.status(404).json("failed to get user data");
-    //   });
-    res.json(user);
+    await UserModel.getAllData()
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(404).json("failed to get user data");
+      });
+    // res.json(user);
   }
 
   async getById(req, res, next) {
@@ -76,6 +76,7 @@ class UserController {
 
   async update(req, res) {
     const user = req.body;
+    console.log(user);
     if (user.id && user.name && user.email) {
       await UserModel.checkIdExists(user.id)
         .then(async (data) => {
