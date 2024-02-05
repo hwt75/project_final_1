@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getData,
+  loadStatus,
+  addUser
+} from "../../../redux/dataSlice";
 import "./index.scss"
-const MyForm = () => {
+const MyForm = ({closeModal}) => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    field1: '',
-    field2: '',
-    field3: '',
-    field4: '',
-    field5: '',
-    field6: '',
-    field7: ''
+    name: '',
+    email: '',
+    studentId: '',
+    address: '',
+    phoneNumber: '',
+    hometown: ''
   });
 
   const handleChange = (e) => {
@@ -21,35 +27,45 @@ const MyForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your form submission logic here
     console.log('Form submitted:', formData);
+    dispatch(addUser(formData));
+    closeModal();
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className='container-form'>
-        <label htmlFor="field1">Name:</label>
-        <input type="text" id="field1" name="name" value={formData.field1} onChange={handleChange} required className='form-field'/>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+        </div>
 
-        <label htmlFor="field2">:</label>
-        <input type="text" id="field2" name="" value={formData.field2} onChange={handleChange} required />
+        <div className="form-group">
+          <label htmlFor="email">Email:</label>
+          <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} required />
+        </div>
 
-        <label htmlFor="field3">:</label>
-        <input type="text" id="field3" name="" value={formData.field3} onChange={handleChange} required />
+        <div className="form-group">
+          <label htmlFor="studentId">Student Id:</label>
+          <input type="text" id="studentId" name="studentId" value={formData.studentId} onChange={handleChange} required />
+        </div>
 
-        <label htmlFor="field4">:</label>
-        <input type="text" id="field4" name="" value={formData.field4} onChange={handleChange} required />
+        <div className="form-group">
+          <label htmlFor="address">Address:</label>
+          <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
+        </div>
 
-        <label htmlFor="field5">:</label>
-        <input type="text" id="field5" name="" value={formData.field5} onChange={handleChange} required />
+        <div className="form-group">
+          <label htmlFor="phoneNumber">PhoneNumber:</label>
+          <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+        </div>
 
-        <label htmlFor="field6">:</label>
-        <input type="text" id="field6" name="" value={formData.field6} onChange={handleChange} required />
+        <div className="form-group">
+          <label htmlFor="hometown">Hometown:</label>
+          <input type="text" id="hometown" name="hometown" value={formData.hometown} onChange={handleChange} />
+        </div>
 
-        <label htmlFor="field7">:</label>
-        <input type="text" id="field7" name="" value={formData.field7} onChange={handleChange} required />
-
-        <button type="submit" style={{backgroundColor: "#1677ff"}}>Submit</button>
+        <button type="submit" className='button-submit'>Submit</button>
       </form>
     </div>
   );

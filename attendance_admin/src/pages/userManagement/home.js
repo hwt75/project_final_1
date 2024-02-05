@@ -1,24 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Popconfirm,
-  Button,
-  Table,
-Modal
-} from "antd";
+import { Popconfirm, Button, Table, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getData,
   loadStatus,
   deleteUser,
   resetDeleteUserStatus,
+  resetAddUserStatus,
 } from "../../redux/dataSlice";
 import MyForm from "./form";
-
-/* eslint-enable no-template-curly-in-string */
-
-const onFinish = (values) => {
-  console.log(values);
-};
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -26,12 +16,12 @@ const Home = () => {
   const dataState = useSelector((state) => state.dataSlice);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
-
-
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -119,7 +109,6 @@ const Home = () => {
         inputType: col.dataIndex === "birth" || "studentId" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
-
       }),
     };
   });
@@ -136,28 +125,43 @@ const Home = () => {
   useEffect(() => {
     if (dataState.loadDeleteUserStatus === loadStatus.Success) {
       dispatch(getData());
+      dispatch(resetAddUserStatus());
     }
   }, [dataState.loadDeleteUserStatus]);
-  useEffect(()=>{
-    if (dataState.loadAddUserStatus === loadStatus.Success){
-      dispatch(getData())
+  useEffect(() => {
+    if (dataState.loadAddUserStatus === loadStatus.Success) {
+      dispatch(getData());
+      dispatch(resetAddUserStatus());
     }
-  },[dataState.loadAddUserStatus])
+  }, [dataState.loadAddUserStatus]);
   return (
     <>
-      <Button type="primary" onClick={()=>{setIsModalOpen(true)}}>Add Student</Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        Add Student
+      </Button>
       <Table
         bordered
         dataSource={data}
         columns={mergedColumns}
         rowClassName="editable-row"
       ></Table>
-       <Modal title="Basic Modal" size="large" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={600} footer="">
-       <MyForm/>
-
+      <Modal
+        title="Basic Modal"
+        size="large"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={600}
+        footer=""
+      >
+        <MyForm closeModal = {closeModal}/>
       </Modal>
     </>
-
   );
 };
 

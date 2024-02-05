@@ -1,36 +1,21 @@
-.container-form {
-    width: 500px;
-    padding: 20px;
-    background-color: #fff;
+.form-group {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+    min-width: 700px;
+    label {
+        margin-right: 10px;
+      }
+      
+      input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
 
-
-    
-        display: flex;
-        flex-direction: column;
-
-        label {
-            margin-bottom: 5px;
-        }
-
-        input {
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;  /* Add border to input fields */
-            border-radius: 4px;     /* Optional: Add border radius for a rounded look */
-        }
-
-        button {
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            border: 1px solid #0056b3; /* Add border to the button */
-            border-radius: 4px;       /* Optional: Add border radius for a rounded look */
-
-            &:hover {
-                background-color: #0056b3;
-            }
-        }
-    
-}
+    .button-submit{
+        background-color: #1677ff !important;
+    }
+  }
+  
+  

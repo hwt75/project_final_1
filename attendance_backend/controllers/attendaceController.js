@@ -75,6 +75,21 @@ class AttendanceController {
       return res.status(400).json("Please enter a user number");
     }
   }
+  
+  async deleteByStudentId(studentId){
+    if(studentId)
+    {
+      Attendance.deleteMany({user_number: studentId})
+        .then((data) => {
+          console.log(data);
+          return true;
+        })
+        .catch((err)=>{
+          console.log(err);
+          return false;
+        })
+    }
+  }
 
   autoScanAttendanceFuntion() {
     const currentTime = new Date.now();
@@ -90,7 +105,7 @@ class AttendanceController {
       { leave_time: null },
       { $set: { leave_time: setTime, update_time: Date.now() } }
     )
-      .then((attendance) => {
+      .then((attendance) => { 
         if (attendance != null) {
           return true;
         }

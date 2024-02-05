@@ -15,7 +15,7 @@ const generateRandomString = (length) => {
 
   
 export const axiosRequest = (path, data) => {
-  const url = `${host}${path}`;
+  const url = `${host}/user/${path}`;
   return axios.post(url, { ...data });
 };
 
