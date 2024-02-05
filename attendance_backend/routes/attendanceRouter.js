@@ -1,7 +1,6 @@
 const express = require('express');
-const AttendanceController = require('../controllers/attendaceController')
+const attendanceController = require('../controllers/attendaceController')
 const router = express.Router();
-const attendanceController = new AttendanceController();
 router.post('/', attendanceController.attendance);
-
+router.get('/', attendanceController.autoAttendanceAsync)
 module.exports = router;

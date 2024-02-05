@@ -55,7 +55,6 @@ class UserController {
         console.log(err);
         return res.status(404).json("failed to get user data");
       });
-    // res.json(user);
   }
 
   async getById(req, res, next) {
@@ -105,7 +104,7 @@ class UserController {
     var id = req.params.id;
 
     if (id) {
-      await UserModel.removeUserByIdById(id)
+      await UserModel.removeUserById(id)
         .then((data) => {
           res.json(data);
         })

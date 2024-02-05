@@ -21,8 +21,15 @@ export const axiosRequest = (path, data) => {
 
 export const axiosGetRequest = async (isDelete,id) =>{
   var url = `${host}/user`
-  url = id ? `${url}/${id}` : url
-  url = isDelete ? `${url}/delete/${id}` : url
+  // url = isDelete && id ? `${url}/delete/${id}` : `${url}/${id}`
+  if(isDelete){
+    url = `${url}/delete/${id}`;
+  }
+  // if(!isDelete && id)
+  // {
+  //   url = `${url}/${id}`;
+  // }
+  // console.log(url);
   return axios.get(url);
 }
 

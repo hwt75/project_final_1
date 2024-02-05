@@ -47,9 +47,23 @@ const Attendance = () => {
 
        
     };
+
+    const scanAttendance = async () => {
+      await axios.get(process.env.REACT_APP_HOST)
+         .then(data => {
+            console.log(data);
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+    }
     const isNumber = (str) => {
       return /^\d+$/.test(str);
     };
+    const scanButton = ()=>{
+      modalRef.current.scanTest();
+      scanAttendance()
+    }
    const butonClick = useCallback(()=>{
       if(studentNumber == null || !isNumber(studentNumber) || studentNumber.length < 7 || studentNumber.length > 12) {
          setIsValud(true);
@@ -90,6 +104,17 @@ const Attendance = () => {
                 <div className="buttons">
                   <button className="blob-btn" onClick={()=> butonClick()}>
                      Attendances
+                     <span className="blob-btn__inner">
+                        <span className="blob-btn__blobs">
+                        <span className="blob-btn__blob"></span>
+                        <span className="blob-btn__blob"></span>
+                        <span className="blob-btn__blob"></span>
+                        <span className="blob-btn__blob"></span>
+                        </span>
+                     </span>
+                  </button>
+                  <button className="blob-btn" onClick={()=> scanButton()}>
+                     Auto Scan Attendances
                      <span className="blob-btn__inner">
                         <span className="blob-btn__blobs">
                         <span className="blob-btn__blob"></span>

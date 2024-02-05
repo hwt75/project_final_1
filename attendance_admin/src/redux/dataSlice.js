@@ -26,9 +26,10 @@ export const loadStatus = {
       return rejectWithValue(error?.response?.data?.message || error?.response || error);
     }
   });
-  export const deleteUser = createAsyncThunk('/delete-user', async (params, { rejectWithValue }) => {
+  export const deleteUser = createAsyncThunk('/delete', async (params, { rejectWithValue }) => {
     try {
       const response = await axiosGetRequest(true,params);
+      console.log("delete");
       return response.data;
     } 
     catch (error) {
@@ -133,5 +134,5 @@ export const dataSlice = createSlice({
       })
     }
 })
-// export const {resetLoadDataStatus, resetAddUserStatus, resetUpdateUserStatus,resetGetUserByIdStatus,resetDeleteUserStatus} = dataSlice.actions;
+export const {resetLoadDataStatus, resetAddUserStatus, resetUpdateUserStatus,resetGetUserByIdStatus,resetDeleteUserStatus} = dataSlice.actions;
 export default dataSlice.reducer;

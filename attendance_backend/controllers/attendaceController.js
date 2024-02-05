@@ -20,9 +20,7 @@ class AttendanceController {
       });
   }
 
-
   async attendance(req, res, next) {
-    console.log("tesst");
     const { user_number, ip } = req.body;
     if (user_number) {
       await UserModel.checkStudentExists(user_number)
@@ -39,7 +37,6 @@ class AttendanceController {
                     is_arrival: false,
                     message: "update successfully",
                   });
-                  console.log("scuucce");
                 } else {
                   const attendance = new Attendance({
                     user_number: user_number,
@@ -57,7 +54,9 @@ class AttendanceController {
                       });
                     })
                     .catch((err) => {
-                      return res.status(400).json("failed to update Attendance");
+                      return res
+                        .status(400)
+                        .json("failed to update Attendance");
                     });
                 }
               })
@@ -73,9 +72,52 @@ class AttendanceController {
           res.status(404).json("failed to check student");
         });
     } else {
-      return res.status(400).json( "Please enter a user number");
+      return res.status(400).json("Please enter a user number");
     }
+  }
+
+  autoScanAttendanceFuntion() {
+    const currentTime = new Date.now();
+    if (currentTime.getHours() > 23) {
+      this.autoAttendance();
+    }
+  }
+
+  autoAttendance = () => {
+    const setTime = new Date();
+    setTime.setHours(23);
+    return Attendance.findOneAndUpdate(
+      { leave_time: null },
+      { $set: { leave_time: setTime, update_time: Date.now() } }
+    )
+      .then((attendance) => {
+        if (attendance != null) {
+          return true;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  };
+
+  async autoAttendanceAsync(req, res, next) {
+    const setTime = new Date();
+    setTime.setHours(23);
+    return await Attendance.findOneAndUpdate(
+      { leave_time: null },
+      { $set: { leave_time: setTime, update_time: Date.now() } }
+    )
+      .then((attendance) => {
+        if (attendance != null) {
+          res.json("Auto attendance successful!");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json("Error during auto attendance");
+      });
   }
 }
 
-module.exports = AttendanceController;
+module.exports = new AttendanceController();
