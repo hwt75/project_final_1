@@ -17,14 +17,16 @@ const Home = () => {
       countStudentAttendance: 0,
     }
   );
-
+  const curentTime = new Date();
+  const curentDate = `day: ${curentTime.getDate()}, month: ${curentTime.getMonth()}, year: ${curentTime.getFullYear()}`;
+  console.log(curentDate);
   const dataState = useSelector((state) => state.dataSlice);
 
   useEffect(()=>{
     dispatch(getStaticsData())
   },[])
   useEffect(()=>{
-    if(dataState.loadGetStaticsStatus == loadStatus.Success)
+    if(dataState.loadGetStaticsStatus === loadStatus.Success)
     {
       setData(dataState.static)
     }
@@ -38,8 +40,8 @@ const Home = () => {
     }}
   >
     <Alert message={`Number of student: ${data.countStudent}`} type="success" />
-    <Alert message={`Number of attendance records: ${data.countAttendance}`} type="info" />
-    <Alert message={`Number of student that attendance today: ${data.countStudentAttendance}`} type="warning" />
+    <Alert message={`Number of attendance records in ${curentDate}: ${data.countAttendance}`} type="info" />
+    <Alert message={`Number of student that attendance in ${curentDate} : ${data.countStudentAttendance}`} type="warning" />
   </Space>
   );
 };
