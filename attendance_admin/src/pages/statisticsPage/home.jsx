@@ -1,22 +1,46 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
+
 
 import "./index.scss";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
-
+import { Alert, Space } from 'antd';
+import { getStaticsData, loadStatus} from "../../redux/dataSlice";
 
 const Home = () => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const [data, setData] = useState(
+    {
+      countStudent: 0,
+      countAttendance: 0,
+      countStudentAttendance: 0,
+    }
+  );
 
+  const dataState = useSelector((state) => state.dataSlice);
 
-  React.useEffect(()=>{
-    window.scrollTo(0, 0)
-
+  useEffect(()=>{
+    dispatch(getStaticsData())
   },[])
-  return (
-    <>
-      home pagesddsfdssfsdsfdssf
-    </>
+  useEffect(()=>{
+    if(dataState.loadGetStaticsStatus == loadStatus.Success)
+    {
+      setData(dataState.static)
+    }
+  },[dataState.loadGetStaticsStatus])
+
+  return (  
+    <Space
+    direction="vertical"
+    style={{
+      width: '100%',
+    }}
+  >
+    <Alert message={`Number of student: ${data.countStudent}`} type="success" />
+    <Alert message={`Number of attendance records: ${data.countAttendance}`} type="info" />
+    <Alert message={`Number of student that attendance today: ${data.countStudentAttendance}`} type="warning" />
+  </Space>
   );
 };
 

@@ -49,7 +49,7 @@ export const Routes = () => {
     return (
         <ReactRouterRoutes>
             <Route path= {routerMapping.UserManagement.url} element={<UserManagementPage/>} />
-            <Route path= {routerMapping.Statistics.url} element={<DevelopmentComponent/>} />
+            <Route path= {routerMapping.Statistics.url} element={<StatisticPage/>} />
             <Route path= {routerMapping.Settings.url} element={<DevelopmentComponent/>} />
             <Route path= {routerMapping.Helps.url} element={<DevelopmentComponent/>} />
 

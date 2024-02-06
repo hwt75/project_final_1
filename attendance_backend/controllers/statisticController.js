@@ -19,13 +19,17 @@ class StatisticController {
     await attendance.countDocuments({})
       .then((data) => {
         staticsData.countAttendance = data;
-        staticsData.countStudentAttendance = data;
         return data;
       })
       .catch((err) => {
         console.log(err);
         return err;
       });
+    await attendance.distinct('user_number')
+      .then((data) => {
+        staticsData.countStudentAttendance = data.length;
+      })
+      .catch(err =>{console.log(err);})
     res.json(staticsData);
   }
 }

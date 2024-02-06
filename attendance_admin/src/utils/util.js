@@ -25,11 +25,11 @@ export const axiosGetRequest = async (isDelete,id) =>{
   if(isDelete){
     url = `${url}/delete/${id}`;
   }
-  // if(!isDelete && id)
-  // {
-  //   url = `${url}/${id}`;
-  // }
-  // console.log(url);
+  return axios.get(url);
+}
+
+export const axiosGetStatic = () =>{
+  var url = `${host}/statics`
   return axios.get(url);
 }
 
