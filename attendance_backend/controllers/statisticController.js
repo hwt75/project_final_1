@@ -16,20 +16,47 @@ class StatisticController {
       .catch((err) => {
         console.log(err);
       });
-    await attendance.countDocuments({})
-      .then((data) => {
-        staticsData.countAttendance = data;
-        return data;
+
+        const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    await attendance.countDocuments({
+      arrival_time: {
+          $gte: todayStart,
+          $lte: todayEnd
+      }})
+      .then(data => {
+        staticsData.countAttendance = data
       })
       .catch((err) => {
         console.log(err);
-        return err;
       });
-    await attendance.distinct('user_number')
-      .then((data) => {
-        staticsData.countStudentAttendance = data.length;
-      })
-      .catch(err =>{console.log(err);})
+      await attendance.aggregate([
+        {
+            $match: {
+                arrival_time: {
+                    $gte: todayStart,
+                    $lte: todayEnd
+                }
+            }
+        },
+        {
+            $group: {
+                _id: "$user_number"
+            }
+        },
+        {
+            $count: "count"
+        }
+    ])
+  .then(data => {
+    console.log(data);
+    staticsData.countStudentAttendance = data[0].count
+  })
+  .catch((err) => {console.log(err);})
     res.json(staticsData);
   }
 }
