@@ -33,5 +33,10 @@ class UserModel extends CommonModel {
       `UPDATE student SET name = '${user.name}', email = '${user.email}', birth = '${user.birth ?? 0}', phoneNumber = '${user.phoneNumber ?? ""}', address = '${user.address ?? ""}', hometown = '${user.hometown ?? ""}'  WHERE id = '${user.id}'`
     );
   }
+  async getCountUsers() {
+    return await this.executeQuery(
+      'SELECT COUNT(*) FROM student'
+    )
+  }
 }
 module.exports = new UserModel();

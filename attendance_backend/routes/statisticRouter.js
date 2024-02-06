@@ -4,7 +4,7 @@ const StatisticController = require('../controllers/statisticController');
 
 const router = express.Router();
 
-const statisticController = new StatisticController();
+router.get('/',StatisticController.getStaticsData)
 
 
 module.exports = router;

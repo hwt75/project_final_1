@@ -79,7 +79,7 @@ class AttendanceController {
   async deleteByStudentId(studentId){
     if(studentId)
     {
-      Attendance.deleteMany({user_number: studentId})
+      await Attendance.deleteMany({user_number: studentId})
         .then((data) => {
           console.log(data);
           return true;
@@ -90,6 +90,17 @@ class AttendanceController {
         })
     }
   }
+  async countAttendances(){
+    await Attendance.countDocuments({})
+      .then((data)=>{
+        return data;
+      })
+      .catch((err)=>{
+        console.log(err);
+        return err;
+      })
+  }
+
 
   autoScanAttendanceFuntion() {
     const currentTime = new Date.now();
